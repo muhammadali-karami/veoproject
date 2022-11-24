@@ -18,7 +18,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object ApiModule {
 
-    private const val BASE_URL = ""
+    private const val BASE_URL = "https://api.themoviedb.org/3/"
 
     @Singleton
     @Provides
