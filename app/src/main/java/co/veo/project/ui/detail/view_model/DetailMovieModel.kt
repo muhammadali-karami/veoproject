@@ -1,9 +1,10 @@
-package co.veo.project.ui.list.view_model
+package co.veo.project.ui.detail.view_model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import co.veo.project.data.model.response.Movie
 import co.veo.project.data.model.response.MovieList
 import co.veo.project.data.remote.NetworkResource
 import co.veo.project.data.repository.MovieRepository
@@ -17,31 +18,29 @@ import java.net.SocketTimeoutException
 import javax.inject.Inject
 
 @HiltViewModel
-class ListViewModel @Inject constructor(private val repository: MovieRepository) : ViewModel() {
+class DetailMovieModel @Inject constructor(private val repository: MovieRepository) : ViewModel() {
 
-    private val _movieListResult = MutableLiveData<NetworkResource<MovieList>>()
-    val movieListResult: LiveData<NetworkResource<MovieList>>
-        get() = _movieListResult
+    private val _movieDetailResult = MutableLiveData<NetworkResource<Movie>>()
+    val movieDetailResult: LiveData<NetworkResource<Movie>>
+        get() = _movieDetailResult
 
-    fun getMovieList(
-        mediaType: String,
-        timeWindow: String,
+    fun getMovieDetail(
+        movieId: Long,
         apiKey: String? = Const.API_KEY
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                _movieListResult.postValue(NetworkResource.Loading())
-                val response = repository.getMovieList(
-                    mediaType,
-                    timeWindow,
+                _movieDetailResult.postValue(NetworkResource.Loading())
+                val response = repository.getMovieDetail(
+                    movieId,
                     apiKey!!
                 )
                 if (response.isSuccessful) {
                     response.body()?.let {
-                        _movieListResult.postValue(NetworkResource.Success(it))
+                        _movieDetailResult.postValue(NetworkResource.Success(it))
                     }
                 } else {
-                    _movieListResult.postValue(
+                    _movieDetailResult.postValue(
                         NetworkResource.Error(
                             response.code(),
                             response.errorBody()!!
@@ -51,7 +50,7 @@ class ListViewModel @Inject constructor(private val repository: MovieRepository)
             } catch (e: Exception) {
                 Logger.e(e.message.toString())
                 if (e is SocketTimeoutException) {
-                    _movieListResult.postValue(
+                    _movieDetailResult.postValue(
                         NetworkResource.Error(
                             HttpURLConnection.HTTP_GATEWAY_TIMEOUT,
                             null

@@ -18,4 +18,12 @@ class MovieRepository @Inject constructor(private val apiService: ApiService) {
         timeWindow,
         apiKey
     )
+
+    suspend fun getMovieDetail(
+        movieId: Long,
+        apiKey: String
+    ) = apiService.getMovieDetail(
+        movieId,
+        apiKey
+    )
 }
