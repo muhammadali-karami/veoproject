@@ -86,4 +86,7 @@ dependencies {
     // Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:2.5.2"
     implementation "androidx.navigation:navigation-ui-ktx:2.5.2"
+
+    // Loader
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 }
