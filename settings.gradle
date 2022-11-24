@@ -1,0 +1,32 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+//        google()
+//        mavenCentral()
+        maven {
+            url "https://android.houp.ir/repository/Maven-Android-Group/"
+            allowInsecureProtocol = true
+            credentials {
+                username "podbox"
+                password "ooyekaiCiwoum2zi"
+            }
+        }
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+//        google()
+//        mavenCentral()
+        maven {
+            url "https://android.houp.ir/repository/Maven-Android-Group/"
+            allowInsecureProtocol = true
+            credentials {
+                username "podbox"
+                password "ooyekaiCiwoum2zi"
+            }
+        }
+    }
+}
+rootProject.name = "VeoProject"
+include ':app'
