@@ -3,7 +3,6 @@ package co.veo.project.ui.list.view.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.runtime.currentComposer
 import androidx.recyclerview.widget.RecyclerView
 import co.veo.project.R
 import co.veo.project.data.model.response.Movie
@@ -14,10 +13,10 @@ import co.veo.project.utility.Utility
 import coil.load
 
 
-class MovieListAdapter(
+class ListAdapter(
     private val movies: List<Movie>,
     private val listener: OnMovieSelected
-) : RecyclerView.Adapter<MovieListAdapter.StoreHolder>() {
+) : RecyclerView.Adapter<ListAdapter.StoreHolder>() {
     private var lastView: StoreHolder? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoreHolder {

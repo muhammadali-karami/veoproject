@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.veo.project.data.model.response.Movie
-import co.veo.project.data.model.response.MovieList
 import co.veo.project.data.remote.NetworkResource
 import co.veo.project.data.repository.MovieRepository
 import co.veo.project.utility.Const
@@ -18,7 +17,7 @@ import java.net.SocketTimeoutException
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailMovieModel @Inject constructor(private val repository: MovieRepository) : ViewModel() {
+class DetailViewModel @Inject constructor(private val repository: MovieRepository) : ViewModel() {
 
     private val _movieDetailResult = MutableLiveData<NetworkResource<Movie>>()
     val movieDetailResult: LiveData<NetworkResource<Movie>>
