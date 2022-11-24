@@ -7,12 +7,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.navigation.fragment.NavHostFragment
+import co.veo.project.R
 import co.veo.project.data.enum.MediaType
 import co.veo.project.data.enum.TimeWindowType
 import co.veo.project.data.model.response.MovieList
 import co.veo.project.data.remote.NetworkResource
 import co.veo.project.databinding.FragmentListBinding
+import co.veo.project.ui.detail.view.fragment.DetailFragment
 import co.veo.project.ui.list.view.adapter.MovieListAdapter
 import co.veo.project.ui.list.view.interfaces.OnMovieSelected
 import co.veo.project.ui.list.view_model.ListViewModel
@@ -20,15 +22,11 @@ import co.veo.project.utility.Utility
 import dagger.hilt.android.AndroidEntryPoint
 
 
-private const val ARG_MOVIE_ID = "movieId"
-
 @AndroidEntryPoint
 class ListFragment : Fragment(), OnMovieSelected {
 
     private lateinit var binding: FragmentListBinding
     private val viewModel: ListViewModel by viewModels()
-
-    private var movieId: Long? = null
 
     companion object {
         /**
@@ -38,18 +36,13 @@ class ListFragment : Fragment(), OnMovieSelected {
         fun newInstance(args: Bundle?) =
             ListFragment().apply {
                 arguments = Bundle().apply {
-                    args?.let {
-                        movieId = args.getLong(ARG_MOVIE_ID, 0)
-                    }
+                    args?.let {}
                 }
             }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            movieId = it.getLong(ARG_MOVIE_ID, 0)
-        }
     }
 
     override fun onCreateView(
@@ -75,7 +68,7 @@ class ListFragment : Fragment(), OnMovieSelected {
     }
 
     private fun observeMovieList() {
-        viewModel.movieResult
+        viewModel.movieListResult
             .observe(viewLifecycleOwner) { response ->
                 when (response) {
                     is NetworkResource.Success -> {
@@ -87,7 +80,7 @@ class ListFragment : Fragment(), OnMovieSelected {
                     is NetworkResource.Error -> {
                         hideLoader()
                         response.errorResponseBody?.let {
-                            // TODO show server error for example inside a dialog
+                            // TODO show server error (for example inside a dialog)
                         }
                     }
                     is NetworkResource.Loading -> {
@@ -105,14 +98,23 @@ class ListFragment : Fragment(), OnMovieSelected {
 
     private fun showMovieList(movieList: MovieList) {
         movieList.results?.let {
+            binding.rvList.visibility = View.VISIBLE
             val adapter = MovieListAdapter(movieList.results, this)
             binding.rvList.adapter = adapter
         }
     }
 
     override fun onMovieClicked(movieId: Long?) {
-        // TODO go to detail page
-        Toast.makeText(activity, "$movieId", Toast.LENGTH_SHORT).show()
+        movieId?.let {
+            val navHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.navHostFragment) as NavHostFragment
+            val navController = navHostFragment.navController
+
+            val bundle = Bundle()
+            bundle.putLong("movieId", it)
+            DetailFragment.newInstance(bundle)
+
+            navController.navigate(R.id.action_listFragment_to_detailFragment, bundle)
+        }
     }
 
     private fun showLoader() {
@@ -122,6 +124,5 @@ class ListFragment : Fragment(), OnMovieSelected {
 
     private fun hideLoader() {
         binding.loader.visibility = View.GONE
-        binding.rvList.visibility = View.VISIBLE
     }
 }

@@ -3,4 +3,12 @@
 
     <!-- General -->
     <string name="no_internet_connection">No Internet connection</string>
+
+    <!-- Detail -->
+    <string name="detail_release_date" formatted="false">Release date: %s</string>
+    <string name="detail_adult" formatted="false">Adult: %s</string>
+    <string name="detail_adult_yes">yes</string>
+    <string name="detail_adult_no">no</string>
+    <string name="detail_budget" formatted="false">Budget: %d $</string>
+    <string name="detail_revenue" formatted="false">Revenue: %d $</string>
 </resources>

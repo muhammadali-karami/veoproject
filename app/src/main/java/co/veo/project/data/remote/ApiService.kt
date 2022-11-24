@@ -1,5 +1,6 @@
 package co.veo.project.data.remote
 
+import co.veo.project.data.model.response.Movie
 import co.veo.project.data.model.response.MovieList
 import com.google.android.gms.common.internal.safeparcel.SafeParcelable.Param
 import retrofit2.Response
@@ -17,4 +18,10 @@ interface ApiService {
         @Path("timeWindow") timeWindow: String,
         @Query("api_key") apiKey: String
     ) : Response<MovieList>
+
+    @GET("movie/{movieId}")
+    suspend fun getMovieDetail(
+        @Path("movieId") movieId: Long,
+        @Query("api_key") apiKey: String
+    ) : Response<Movie>
 }
