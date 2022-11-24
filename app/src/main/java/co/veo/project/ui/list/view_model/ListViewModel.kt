@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import co.veo.project.data.enum.MediaType
+import co.veo.project.data.enum.TimeWindowType
 import co.veo.project.data.model.response.MovieList
 import co.veo.project.data.remote.NetworkResource
 import co.veo.project.data.repository.MovieRepository
@@ -22,6 +24,11 @@ class ListViewModel @Inject constructor(private val repository: MovieRepository)
     private val _movieListResult = MutableLiveData<NetworkResource<MovieList>>()
     val movieListResult: LiveData<NetworkResource<MovieList>>
         get() = _movieListResult
+
+    init {
+        // TODO paging 3 should be used for pagination in this viewmodel
+        getMovieList(MediaType.MOVIE.type, TimeWindowType.DAY.type)
+    }
 
     fun getMovieList(
         mediaType: String,

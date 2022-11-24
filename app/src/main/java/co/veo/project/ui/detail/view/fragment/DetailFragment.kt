@@ -17,8 +17,6 @@ import coil.load
 import dagger.hilt.android.AndroidEntryPoint
 
 
-public const val ARG_MOVIE_ID = "movieId"
-
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
 
@@ -28,9 +26,8 @@ class DetailFragment : Fragment() {
     private var movieId: Long? = null
 
     companion object {
-        /**
-         * @param args is bundle.
-         */
+        const val ARG_MOVIE_ID = "movieId"
+
         @JvmStatic
         fun newInstance(args: Bundle?) =
             DetailFragment().apply {
@@ -46,10 +43,6 @@ class DetailFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             movieId = it.getLong(ARG_MOVIE_ID, 0)
-        }
-
-        if (movieId == 0L) {
-            // TODO go back
         }
     }
 
@@ -69,6 +62,7 @@ class DetailFragment : Fragment() {
     private fun init() {
         setObservers()
         getMovieDetail()
+        // TODO pull to refresh here
     }
 
     private fun setObservers() {
@@ -104,6 +98,9 @@ class DetailFragment : Fragment() {
         }
     }
 
+    /**
+     * @param movie it's single movie info that got from rest api
+     */
     private fun showMovieDetail(movie: Movie) {
         binding.cvDetail.visibility = View.VISIBLE
 

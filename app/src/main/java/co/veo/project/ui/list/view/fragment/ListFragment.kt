@@ -28,23 +28,6 @@ class ListFragment : Fragment(), OnMovieSelected {
     private lateinit var binding: FragmentListBinding
     private val viewModel: ListViewModel by viewModels()
 
-    companion object {
-        /**
-         * @param args is bundle.
-         */
-        @JvmStatic
-        fun newInstance(args: Bundle?) =
-            ListFragment().apply {
-                arguments = Bundle().apply {
-                    args?.let {}
-                }
-            }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -60,7 +43,7 @@ class ListFragment : Fragment(), OnMovieSelected {
 
     private fun init() {
         setObservers()
-        getMovieList()
+        // TODO pull to refresh here
     }
 
     private fun setObservers() {
@@ -90,12 +73,18 @@ class ListFragment : Fragment(), OnMovieSelected {
             }
     }
 
+    /**
+     * you can use this method for example when pull to refresh added to this page
+     */
     private fun getMovieList() {
         if (Utility.hasConnection(activity)) {
             viewModel.getMovieList(MediaType.MOVIE.type, TimeWindowType.DAY.type)
         }
     }
 
+    /**
+     * @param movieList it's all data and pagination that got from rest api
+     */
     private fun showMovieList(movieList: MovieList) {
         movieList.results?.let {
             binding.rvList.visibility = View.VISIBLE
@@ -104,13 +93,16 @@ class ListFragment : Fragment(), OnMovieSelected {
         }
     }
 
+    /**
+     * @param movieId it's movie id to get movie detail
+     */
     override fun onMovieClicked(movieId: Long?) {
         movieId?.let {
             val navHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.navHostFragment) as NavHostFragment
             val navController = navHostFragment.navController
 
             val bundle = Bundle()
-            bundle.putLong("movieId", it)
+            bundle.putLong(DetailFragment.ARG_MOVIE_ID, it)
             DetailFragment.newInstance(bundle)
 
             navController.navigate(R.id.action_listFragment_to_detailFragment, bundle)
