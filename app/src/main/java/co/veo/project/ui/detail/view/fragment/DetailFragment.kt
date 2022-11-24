@@ -10,7 +10,7 @@ import co.veo.project.R
 import co.veo.project.data.model.response.Movie
 import co.veo.project.data.remote.NetworkResource
 import co.veo.project.databinding.FragmentDetailBinding
-import co.veo.project.ui.detail.view_model.DetailMovieModel
+import co.veo.project.ui.detail.view_model.DetailViewModel
 import co.veo.project.utility.Const
 import co.veo.project.utility.Utility
 import coil.load
@@ -21,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class DetailFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailBinding
-    private val viewModel: DetailMovieModel by viewModels()
+    private val viewModel: DetailViewModel by viewModels()
 
     private var movieId: Long? = null
 

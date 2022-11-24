@@ -2,7 +2,6 @@ package co.veo.project
 
 import co.veo.project.data.enum.MediaType
 import co.veo.project.data.enum.TimeWindowType
-import co.veo.project.data.repository.MovieRepository
 import co.veo.project.utility.Const
 import org.junit.Assert.*
 import org.junit.Before
@@ -16,11 +15,11 @@ import org.junit.Test
  */
 class MovieRepositoryUnitTest {
 
-    private lateinit var fakeRepository: MovieRepositoryFake
+    private lateinit var fakeRepository: MovieRepositoryMock
 
     @Before
     fun setup() {
-        fakeRepository = MovieRepositoryFake()
+        fakeRepository = MovieRepositoryMock()
     }
 
     @Test
@@ -32,5 +31,15 @@ class MovieRepositoryUnitTest {
         )
 
         assertNotNull(movie)
+    }
+
+    @Test
+    fun `returns true when server sent null movie id`() {
+        val movie = fakeRepository.getMovieDetail(
+            436270,
+            Const.API_KEY
+        )
+
+        assertNull(movie.id)
     }
 }

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
@@ -15,7 +14,7 @@ import co.veo.project.data.model.response.MovieList
 import co.veo.project.data.remote.NetworkResource
 import co.veo.project.databinding.FragmentListBinding
 import co.veo.project.ui.detail.view.fragment.DetailFragment
-import co.veo.project.ui.list.view.adapter.MovieListAdapter
+import co.veo.project.ui.list.view.adapter.ListAdapter
 import co.veo.project.ui.list.view.interfaces.OnMovieSelected
 import co.veo.project.ui.list.view_model.ListViewModel
 import co.veo.project.utility.Utility
@@ -88,7 +87,7 @@ class ListFragment : Fragment(), OnMovieSelected {
     private fun showMovieList(movieList: MovieList) {
         movieList.results?.let {
             binding.rvList.visibility = View.VISIBLE
-            val adapter = MovieListAdapter(movieList.results, this)
+            val adapter = ListAdapter(movieList.results, this)
             binding.rvList.adapter = adapter
         }
     }
