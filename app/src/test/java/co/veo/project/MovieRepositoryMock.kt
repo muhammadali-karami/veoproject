@@ -2,10 +2,8 @@ package co.veo.project
 
 import co.veo.project.data.model.response.Movie
 import co.veo.project.data.model.response.MovieList
-import co.veo.project.data.repository.MovieRepository
-import retrofit2.Response
 
-class MovieRepositoryFake {
+class MovieRepositoryMock {
     fun getMovieList(
         mediaType: String,
         timeWindow: String,
@@ -19,5 +17,12 @@ class MovieRepositoryFake {
         val movieList = arrayListOf<Movie>()
         movieList.add(movie)
         return MovieList(1, movieList, 100, 1000)
+    }
+
+    fun getMovieDetail(
+        movieId: Long,
+        apiKey: String
+    ): Movie {
+        return Movie()
     }
 }

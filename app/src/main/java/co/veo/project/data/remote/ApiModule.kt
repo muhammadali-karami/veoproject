@@ -14,6 +14,11 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 
+/**
+ * Desc: Main config to create retrofit object
+ * for example you can add headers to any rest api or you can change read time out
+ * or even base url in this class
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 object ApiModule {
