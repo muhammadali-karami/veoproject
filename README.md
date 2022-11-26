@@ -23,8 +23,6 @@ https://drive.google.com/file/d/1i7QT5oKjCNDo5V972LHyfdZgtEj_6ib3/view?usp=share
 
 - [@muhammadali-karami](https://github.com/muhammadali-karami)
 
-Mohammad Ali Karami
-
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
